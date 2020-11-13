@@ -37,18 +37,32 @@ public class Random {
     // Return random number.
     public int getNumber(){
         int num = 0;
+        int one = 0;
+        int two = 0;
+        int three = 0;
+        int four = 0;
         int diff = this.high - this.low + 1;
-        num = (int) (this.nanoS / (this.second + 1));
+        one = (int) (this.nanoS / (this.second + 1));
         
-        num = (int) (num * this.hour);
+        two = (int) (one * this.hour);
         
-        num = (int) (num / this.minute);
+        three = (int) (Math.abs(two) / this.minute);
         
-        num = (int) (num % diff);
+        four = (int) (three % diff);
+
+        num = four;
         
         num += low;
         
+        if (num < 0){
+            System.out.println("nanoS / second = " + one);
+            System.out.println("one * hour = " + two);
+            System.out.println("two / minute = " + three);
+            System.out.println("three % difference = " + four);
+        }
+        
         return num;
    }
+
 
 }

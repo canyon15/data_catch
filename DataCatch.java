@@ -5,7 +5,11 @@ import java.io.FileWriter;
 import java.util.Map;
 import java.util.HashMap;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.util.Scanner;
+import java.util.Formatter;
+
 
 public class DataCatch{
 
@@ -26,9 +30,10 @@ public class DataCatch{
     
         } 
         catch(IOException e){
-            System.out.println("An error occured.");
+            System.out.println("An error occured in initilizing datacatch.");
             e.printStackTrace();
         }
+        sRead();
 
 
     }
@@ -38,7 +43,8 @@ public class DataCatch{
         if (this.values.containsKey(num)){
             n = this.values.get(num);
             n += 1;
-            this.values.replace(num, n);
+            this.values.remove(num);
+            this.values.put(num, n);
         }
         else{
             this.values.put(num, 1);
@@ -46,7 +52,41 @@ public class DataCatch{
         sWrite(values);
     }
 
-    private void sWrite(Map values){
+    //public void sort(){
+        
+    //}
+
+    private void sRead(){
+        System.out.println("sRead.");
+        boolean k = true;
+        int key = 0;
+        int value = 0;
+        try {
+            Scanner reader = new Scanner(this.record);
+            while (reader.hasNextInt()){
+                if (k){
+                    key = reader.nextInt();
+                    k = false;
+               }
+                else{
+                    value = reader.nextInt();
+                    k = true;
+                    this.values.put(key, value);
+
+                }
+
+            }
+            reader.close();
+        }
+        catch (IOException e) {
+            System.out.println("An error occured in sRead.");
+            e.printStackTrace();
+        }
+               
+
+    }
+
+    private void sWrite(Map <Integer, Integer> values){
         try{
             this.BW = new BufferedWriter(new FileWriter(this.record));
             for(Map.Entry<Integer, Integer> entry : values.entrySet()){
@@ -68,8 +108,20 @@ public class DataCatch{
 
     }
 
+    public void clearFile(){
+        try{
+            Formatter f = new Formatter(this.record);
+            Scanner s = new Scanner(this.record);
+            while(s.hasNext()){
+                f.format(" ");
+            }
+            f.close();
+            s.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
 
-
-
+    }
     
 }
