@@ -1,6 +1,6 @@
 #Data Catch
 
-Records the number of times a integer variable holds a number
+Records the number of times a integer variable holds a number and saves results in a file.
 
 ##Functions
 Save: records numbers passed through variable.
